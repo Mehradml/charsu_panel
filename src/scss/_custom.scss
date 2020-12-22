@@ -1,0 +1,20 @@
+.card {
+  &:hover {
+    box-shadow: 0px 0px 5px #888888;
+  }
+
+  .edit-icon {
+    width: 25px;
+    height: 25px;
+    &:hover {
+      background-color: #fcca03 !important;
+    }
+  }
+  .close-icon {
+    width: 25px;
+    height: 25px;
+    &:hover {
+      background-color: #f7552cec !important;
+    }
+  }
+}
