@@ -71,7 +71,7 @@ const ContactUs = () => {
     axios.delete(`http://103.215.223.142:8000/api/message/${deleteId}`).then((res) => {
       let temp = [...messages];
       temp.splice(
-        temp.findIndex((item) => item.id == id),
+        temp.findIndex((item) => item.id == deleteId),
         1
       );
       setmessages(temp);

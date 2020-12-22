@@ -91,7 +91,7 @@ const removeId =(id)=>{
     axios.delete(`http://103.215.223.142:8000/api/community/${deleteId}`).then((res) => {
       let temp = [...data];
       temp.splice(
-        temp.findIndex((item) => item.id == id),
+        temp.findIndex((item) => item.id == deleteId),
         1
       );
       setdata(temp);

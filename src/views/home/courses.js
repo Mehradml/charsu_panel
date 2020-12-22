@@ -109,7 +109,7 @@ const HomeCourses = () => {
     axios.delete(`http://103.215.223.142:8000/api/course/${deleteId}`).then((res) => {
       let temp = [...data];
       temp.splice(
-        temp.findIndex((item) => item.id == id),
+        temp.findIndex((item) => item.id == deleteId),
         1
       );
       setdata(temp);
