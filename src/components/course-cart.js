@@ -8,7 +8,6 @@ const CourseCart = (props) => {
   const removeId = () => {
       props.removeId(objectData.id);
   };
-  
   const editCard = () => {
     props.editCard(objectData.id);
     window.scrollTo(0, 0);

@@ -88,9 +88,11 @@ const HomeTexts = () => {
       products_title2: productsTitle2,
       news_title: newsTitle,
     };
-    axios.post("http://103.215.223.142:8000/api/index", formData).then((res) => {
-      setSuccessModal(!successModal);
-    });
+    axios
+      .post("http://103.215.223.142:8000/api/index", formData)
+      .then((res) => {
+        setSuccessModal(!successModal);
+      });
   };
 
   const setHeaderTitle1Value = (e) => {

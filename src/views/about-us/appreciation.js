@@ -90,16 +90,17 @@ const Appreciation = () => {
   };
 
   const removeCard = () => {
-    axios.delete(`http://103.215.223.142:8000/api/appreciation/${deleteId}`).then((res) => {
-      let temp = [...data];
-      temp.splice(
-        temp.findIndex((item) => item.id == deleteId),
-        1
-      );
-      setdata(temp);
-      setDeleteModal(!deleteModal)
-
-    });
+    axios
+      .delete(`http://103.215.223.142:8000/api/appreciation/${deleteId}`)
+      .then((res) => {
+        let temp = [...data];
+        temp.splice(
+          temp.findIndex((item) => item.id == id),
+          1
+        );
+        setdata(temp);
+        setDeleteModal(!deleteModal);
+      });
   };
 
   return (

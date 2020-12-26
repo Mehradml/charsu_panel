@@ -58,27 +58,27 @@ const HomeProductCategory = () => {
     formData.append("img", img);
     formData.append("title", title);
     formData.append("id", id);
-    axios.post("http://103.215.223.142:8000/api/category", formData).then((res) => {
-      const temp = [...data];
-      if (id != "") {
-        const pathUrl = path == "" ? res.data.data.img : path;
-        let object = { title, img: pathUrl, id };
-        const index = temp.findIndex((item) => item.id == object.id);
-        temp[index] = object;
-        setdata(temp);
-      } else {
-        let object = { title, img: path, id: res.data.data.id };
-        temp.push(object);
-        setdata(temp);
-      }
-      settitle("");
-      setpath("");
-      setid("");
-      setimg("");
-      setSuccessModal(!successModal)
-    });
-   
-    
+    axios
+      .post("http://103.215.223.142:8000/api/category", formData)
+      .then((res) => {
+        const temp = [...data];
+        if (id != "") {
+          const pathUrl = path == "" ? res.data.data.img : path;
+          let object = { title, img: pathUrl, id };
+          const index = temp.findIndex((item) => item.id == object.id);
+          temp[index] = object;
+          setdata(temp);
+        } else {
+          let object = { title, img: path, id: res.data.data.id };
+          temp.push(object);
+          setdata(temp);
+        }
+        settitle("");
+        setpath("");
+        setid("");
+        setimg("");
+        setSuccessModal(!successModal);
+      });
   };
 
   const setTitleValue = (e) => {
@@ -95,16 +95,17 @@ const HomeProductCategory = () => {
   };
 
   const removeCard = () => {
-    axios.delete(`http://103.215.223.142:8000/api/category/${deleteId}`).then((res) => {
-      let temp = [...data];
-      temp.splice(
-        temp.findIndex((item) => item.id == deleteId),
-        1
-      );
-      setdata(temp);
-      setDeleteModal(!deleteModal)
-
-    });
+    axios
+      .delete(`http://103.215.223.142:8000/api/category/${deleteId}`)
+      .then((res) => {
+        let temp = [...data];
+        temp.splice(
+          temp.findIndex((item) => item.id == id),
+          1
+        );
+        setdata(temp);
+        setDeleteModal(!deleteModal);
+      });
   };
 
   return (

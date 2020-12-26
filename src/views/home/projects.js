@@ -64,27 +64,29 @@ const HomeProjects = () => {
     formData.append("text", text);
     formData.append("city", city);
     formData.append("id", id);
-    axios.post("http://103.215.223.142:8000/api/project", formData).then((res) => {
-      const temp = [...data];
-      if (id != "") {
-        const pathUrl = path == "" ? res.data.data.img : path;
-        let project = { title, text, img: pathUrl, city, id };
-        const index = temp.findIndex((item) => item.id == project.id);
-        temp[index] = project;
-        setdata(temp);
-      } else {
-        let project = { title, text, img: path, city, id: res.data.data.id };
-        temp.push(project);
-        setdata(temp);
-      }
-      setcity("");
-      settext("");
-      settitle("");
-      setpath("");
-      setid("");
-      setimg("");
-       setSuccess(!success)
-    });
+    axios
+      .post("http://103.215.223.142:8000/api/project", formData)
+      .then((res) => {
+        const temp = [...data];
+        if (id != "") {
+          const pathUrl = path == "" ? res.data.data.img : path;
+          let project = { title, text, img: pathUrl, city, id };
+          const index = temp.findIndex((item) => item.id == project.id);
+          temp[index] = project;
+          setdata(temp);
+        } else {
+          let project = { title, text, img: path, city, id: res.data.data.id };
+          temp.push(project);
+          setdata(temp);
+        }
+        setcity("");
+        settext("");
+        settitle("");
+        setpath("");
+        setid("");
+        setimg("");
+        setSuccess(!success);
+      });
   };
 
   const setTitleValue = (e) => {
@@ -105,17 +107,17 @@ const HomeProjects = () => {
   };
 
   const remove = () => {
-    
-    axios.delete(`http://103.215.223.142:8000/api/project/${deleteId}`).then((res) => {
-      let temp = [...data];
-      temp.splice(
-        temp.findIndex((item) => item.id == deleteId),
-        1
-      );
-      setdata(temp);
-    setDanger(!danger)
-
-    });
+    axios
+      .delete(`http://103.215.223.142:8000/api/project/${deleteId}`)
+      .then((res) => {
+        let temp = [...data];
+        temp.splice(
+          temp.findIndex((item) => item.id == id),
+          1
+        );
+        setdata(temp);
+        setDanger(!danger);
+      });
   };
 
   return (

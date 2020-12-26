@@ -30,11 +30,11 @@ const Companies = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setdeleteId] = useState("");
 
-    useEffect(() => {
-        axios.get("http://103.215.223.142:8000/api/slider").then((res) => {
-            setdata(res.data.data);
-        });
-    }, []);
+  useEffect(() => {
+    axios.get("http://103.215.223.142:8000/api/slider").then((res) => {
+      setdata(res.data.data);
+    });
+  }, []);
 
   const handleChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -44,28 +44,11 @@ const Companies = () => {
     }
   };
 
-    const addItem = () => {
-        const formData = new FormData();
-        formData.append("img", img);
-        formData.append("id", id);
-        axios.post("http://103.215.223.142:8000/api/slider", formData).then((res) => {
-            const temp = [...data];
-            if (id != "") {
-                const pathUrl = path == "" ? res.data.data.img : path;
-                let object = { img: pathUrl, id };
-                const index = temp.findIndex((item) => item.id == object.id);
-                temp[index] = object;
-                setdata(temp);
-            } else {
-                let object = { img: path, id: res.data.data.id };
-                temp.push(object);
-                setdata(temp);
-            }
-            setpath("");
-            setid("");
-            setimg("");
-        });
-    };
+  const editItem = (id) => {
+    const object = data.find((item) => item.id === id);
+    setpath(object.img);
+    setid(object.id);
+  };
 
   const addItem = () => {
     const formData = new FormData();
@@ -92,15 +75,10 @@ const Companies = () => {
       });
   };
 
-    const removeCard = () => {
-        axios.delete(`http://103.215.223.142:8000/api/slider/${deleteId}`).then((res) => {
-            let temp = [...data];
-            temp.splice(
-                temp.findIndex((item) => item.id == deleteId),
-                1
-            );
-            setdata(temp);
-            setDeleteModal(!deleteModal)
+  const removeId = (id) => {
+    setdeleteId(id);
+    setDeleteModal(!deleteModal);
+  };
 
   const removeCard = () => {
     axios

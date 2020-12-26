@@ -66,28 +66,36 @@ const HomeCourses = () => {
     formData.append("text", text);
     formData.append("teacher", teacher);
     formData.append("id", id);
-    formData.append("popular", 0);
-    axios.post("http://103.215.223.142:8000/api/course", formData).then((res) => {
-      const temp = [...data];
-      if (id != "") {
-        const pathUrl = path == "" ? res.data.data.img : path;
-        let object = { title, text, img: pathUrl, teacher, id };
-        const index = temp.findIndex((item) => item.id == object.id);
-        temp[index] = object;
-        setdata(temp);
-      } else {
-        let object = { title, text, img: path, teacher, id: res.data.data.id };
-        temp.push(object);
-        setdata(temp);
-      }
-      settext("");
-      settitle("");
-      setteacher("");
-      setpath("");
-      setid("");
-      setimg("");
-      setSuccessModal(!successModal);
-    });
+    formData.append("popular", popular);
+    axios
+      .post("http://103.215.223.142:8000/api/course", formData)
+      .then((res) => {
+        const temp = [...data];
+        if (id != "") {
+          const pathUrl = path == "" ? res.data.data.img : path;
+          let object = { title, text, img: pathUrl, teacher, id };
+          const index = temp.findIndex((item) => item.id == object.id);
+          temp[index] = object;
+          setdata(temp);
+        } else {
+          let object = {
+            title,
+            text,
+            img: path,
+            teacher,
+            id: res.data.data.id,
+          };
+          temp.push(object);
+          setdata(temp);
+        }
+        settext("");
+        settitle("");
+        setteacher("");
+        setpath("");
+        setid("");
+        setimg("");
+        setSuccessModal(!successModal);
+      });
   };
 
   const setTitleValue = (e) => {
@@ -112,15 +120,17 @@ const HomeCourses = () => {
   };
 
   const removeCard = () => {
-    axios.delete(`http://103.215.223.142:8000/api/course/${deleteId}`).then((res) => {
-      let temp = [...data];
-      temp.splice(
-        temp.findIndex((item) => item.id == deleteId),
-        1
-      );
-      setdata(temp);
-      setDeleteModal(!deleteModal);
-    });
+    axios
+      .delete(`http://103.215.223.142:8000/api/course/${deleteId}`)
+      .then((res) => {
+        let temp = [...data];
+        temp.splice(
+          temp.findIndex((item) => item.id == id),
+          1
+        );
+        setdata(temp);
+        setDeleteModal(!deleteModal);
+      });
   };
 
   return (

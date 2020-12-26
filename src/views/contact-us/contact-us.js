@@ -23,7 +23,6 @@ import CIcon from "@coreui/icons-react";
 import MessageCard from "src/components/message-card";
 
 const ContactUs = () => {
-  const [id, setid] = useState("");
   const [data, setdata] = useState("");
   const [path, setpath] = useState("");
   const [title1, settitle1] = useState("");
@@ -35,8 +34,6 @@ const ContactUs = () => {
   const [addressLink, setaddressLink] = useState("");
   const [successModal, setSuccessModal] = useState(false);
   const [messages, setmessages] = useState([]);
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [deleteId, setdeleteId] = useState("");
 
   useEffect(() => {
     axios.get("http://103.215.223.142:8000/api/contact").then((res) => {
@@ -62,36 +59,20 @@ const ContactUs = () => {
     }
   };
 
-  const removeId = (id) => {
-    setdeleteId(id);
-    setDeleteModal(!deleteModal);
-  };
-
-  const removeCard = () => {
-    axios.delete(`http://103.215.223.142:8000/api/message/${deleteId}`).then((res) => {
-      let temp = [...messages];
-      temp.splice(
-        temp.findIndex((item) => item.id == deleteId),
-        1
-      );
-      setmessages(temp);
-      setDeleteModal(!deleteModal);
-    });
-  };
-
-
   const setInformation = () => {
     const formData = new FormData();
     formData.append("img", img);
     formData.append("title1", title1);
-    formData.append("title2", title2);
+    formData.append("title", title2);
     formData.append("phone", phone);
     formData.append("address", address);
-    formData.append("img_link", addressLink);
+    formData.append("addressLink", addressLink);
     formData.append("email", email);
-    axios.post("http://103.215.223.142:8000/api/contact", formData).then((res) => {
-      setSuccessModal(!successModal);
-    });
+    axios
+      .post("http://103.215.223.142:8000/api/contact", formData)
+      .then((res) => {
+        setSuccessModal(!successModal);
+      });
   };
 
   const setTitle1Value = (e) => {
@@ -257,7 +238,7 @@ const ContactUs = () => {
           <CCol xs="12">
             <CRow>
               {messages &&
-                messages.map((item) => <MessageCard messageData={item} removeId={removeId}/>)}
+                messages.map((item) => <MessageCard messageData={item} />)}
             </CRow>
           </CCol>
         </CCardBody>
@@ -275,25 +256,6 @@ const ContactUs = () => {
             onClick={() => setSuccessModal(!successModal)}
           >
             تایید
-          </CButton>
-        </CModalFooter>
-      </CModal>
-      <CModal
-        show={deleteModal}
-        onClose={() => setDeleteModal(!deleteModal)}
-        color="danger"
-      >
-        <CModalHeader closeButton />
-        <CModalBody>آیا از پاک کردن آیتم مطمئن هستید؟</CModalBody>
-        <CModalFooter>
-          <CButton color="danger" onClick={removeCard}>
-            پاک کردن
-          </CButton>
-          <CButton
-            color="secondary"
-            onClick={() => setDeleteModal(!deleteModal)}
-          >
-            بازگشت
           </CButton>
         </CModalFooter>
       </CModal>

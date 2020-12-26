@@ -54,23 +54,25 @@ const Companies = () => {
     const formData = new FormData();
     formData.append("img", img);
     formData.append("id", id);
-    axios.post("http://103.215.223.142:8000/api/company", formData).then((res) => {
-      const temp = [...data];
-      if (id != "") {
-        const pathUrl = path == "" ? res.data.data.img : path;
-        let object = { img: pathUrl, id };
-        const index = temp.findIndex((item) => item.id == object.id);
-        temp[index] = object;
-        setdata(temp);
-      } else {
-        let object = { img: path, id: res.data.data.id };
-        temp.push(object);
-        setdata(temp);
-      }
-      setpath("");
-      setid("");
-      setimg("");
-    });
+    axios
+      .post("http://103.215.223.142:8000/api/company", formData)
+      .then((res) => {
+        const temp = [...data];
+        if (id != "") {
+          const pathUrl = path == "" ? res.data.data.img : path;
+          let object = { img: pathUrl, id };
+          const index = temp.findIndex((item) => item.id == object.id);
+          temp[index] = object;
+          setdata(temp);
+        } else {
+          let object = { img: path, id: res.data.data.id };
+          temp.push(object);
+          setdata(temp);
+        }
+        setpath("");
+        setid("");
+        setimg("");
+      });
   };
 
   const removeId = (id) => {
@@ -79,16 +81,17 @@ const Companies = () => {
   };
 
   const removeCard = () => {
-    axios.delete(`http://103.215.223.142:8000/api/company/${deleteId}`).then((res) => {
-      let temp = [...data];
-      temp.splice(
-        temp.findIndex((item) => item.id == deleteId),
-        1
-      );
-      setdata(temp);
-      setDeleteModal(!deleteModal)
-
-    });
+    axios
+      .delete(`http://103.215.223.142:8000/api/company/${deleteId}`)
+      .then((res) => {
+        let temp = [...data];
+        temp.splice(
+          temp.findIndex((item) => item.id == id),
+          1
+        );
+        setdata(temp);
+        setDeleteModal(!deleteModal);
+      });
   };
   return (
     <>
