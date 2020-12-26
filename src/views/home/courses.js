@@ -18,12 +18,14 @@ import {
   CModalFooter,
   CModalHeader,
   CModalTitle,
+  CSwitch,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import CourseCart from "src/components/course-cart";
 
 const HomeCourses = () => {
   const [data, setdata] = useState("");
+  const [popular, setpopular] = useState(0);
   const [path, setpath] = useState("");
   const [id, setid] = useState("");
   const [title, settitle] = useState("");
@@ -90,6 +92,10 @@ const HomeCourses = () => {
 
   const setTitleValue = (e) => {
     settitle(e.target.value);
+  };
+
+  const setPopularValue = (e) => {
+    setpopular(popular === 0 ? 1 : 0);
   };
 
   const setteacherValue = (e) => {
@@ -176,7 +182,22 @@ const HomeCourses = () => {
                 </CCol>
               </CFormGroup>
               <CFormGroup row>
-                <CCol md="12"></CCol>
+                <CCol md="3">
+                  <CLabel htmlFor="popular">دوره محبوب</CLabel>
+                </CCol>
+                <CCol xs="12" md="9">
+                  <CSwitch
+                    shape="pill"
+                    color="success"
+                    value={popular}
+                    id="popular"
+                    name="popular"
+                    onChange={setPopularValue}
+                    required
+                  />
+                </CCol>
+              </CFormGroup>
+              <CFormGroup row>
                 <CCol md="3">
                   <CLabel htmlFor="img">انتخاب عکس</CLabel>
                 </CCol>

@@ -9,6 +9,7 @@ import {
   CCol,
   CForm,
   CFormGroup,
+  CTextarea,
   CInput,
   CLabel,
   CRow,
@@ -18,59 +19,56 @@ import {
   CModalHeader,
   CModalTitle,
 } from "@coreui/react";
-import CompanyLogo from "../../components/company-logo";
 import CIcon from "@coreui/icons-react";
+import HeaderLink from "src/components/header-link";
 
-const Companies = () => {
+const Header = () => {
   const [data, setdata] = useState("");
   const [path, setpath] = useState("");
   const [id, setid] = useState("");
-  const [img, setimg] = useState("");
+  const [title, settitle] = useState("");
+  const [link, setlink] = useState("");
   const [successModal, setSuccessModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setdeleteId] = useState("");
 
   useEffect(() => {
-    axios.get("http://103.215.223.142:8000/api/company").then((res) => {
+    axios.get("http://103.215.223.142:8000/api/link").then((res) => {
       setdata(res.data.data);
     });
   }, []);
 
-  const handleChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setimg(e.target.files[0]);
-      console.log(img);
-      setpath(URL.createObjectURL(e.target.files[0]));
-    }
-  };
-
   const editItem = (id) => {
     const object = data.find((item) => item.id === id);
-    setpath(object.img);
+    settitle(object.title);
+    setlink(object.link);
     setid(object.id);
   };
 
   const addItem = () => {
-    const formData = new FormData();
-    formData.append("img", img);
-    formData.append("id", id);
-    axios.post("http://103.215.223.142:8000/api/company", formData).then((res) => {
+    const object = { title, link, id };
+    axios.post("http://103.215.223.142:8000/api/link", object).then((res) => {
       const temp = [...data];
       if (id != "") {
-        const pathUrl = path == "" ? res.data.data.img : path;
-        let object = { img: pathUrl, id };
         const index = temp.findIndex((item) => item.id == object.id);
         temp[index] = object;
         setdata(temp);
       } else {
-        let object = { img: path, id: res.data.data.id };
+        let object = { title, link };
         temp.push(object);
         setdata(temp);
       }
-      setpath("");
+      settitle("");
+      setlink("");
       setid("");
-      setimg("");
     });
+  };
+
+  const setTitleValue = (e) => {
+    settitle(e.target.value);
+  };
+  const setLinkValue = (e) => {
+    setlink(e.target.value);
   };
 
   const removeId = (id) => {
@@ -79,15 +77,14 @@ const Companies = () => {
   };
 
   const removeCard = () => {
-    axios.delete(`http://103.215.223.142:8000/api/company/${deleteId}`).then((res) => {
+    axios.delete(`http://103.215.223.142:8000/api/link/${deleteId}`).then((res) => {
       let temp = [...data];
       temp.splice(
-        temp.findIndex((item) => item.id == deleteId),
+        temp.findIndex((item) => item.id == id),
         1
       );
       setdata(temp);
-      setDeleteModal(!deleteModal)
-
+      setDeleteModal(!deleteModal);
     });
   };
   return (
@@ -100,29 +97,33 @@ const Companies = () => {
       >
         <CCol xs="12" lg="8" className="mx-lg-auto">
           <CCard>
-            <CCardHeader>همکاری با شرکت‌ها</CCardHeader>
+            <CCardHeader>لینک جدید</CCardHeader>
             <CCardBody>
               <CFormGroup row>
-                <CCol md="12"></CCol>
                 <CCol md="3">
-                  <CLabel htmlFor="img">انتخاب لوگو</CLabel>
+                  <CLabel htmlFor="title2">عنوان</CLabel>
                 </CCol>
-                <CCol xs="12" md="4">
+                <CCol xs="12" md="9">
                   <CInput
-                    type="file"
-                    id="img"
-                    name="img"
-                    onChange={handleChange}
-                    className="border-0"
+                    id="title2"
+                    placeholder="عنوان"
+                    value={title}
+                    onChange={setTitleValue}
+                    required
                   />
                 </CCol>
-                <CCol xs="12" md="3">
-                  <img
-                    src={path}
-                    alt=""
-                    height="100px"
-                    width="200px"
-                    className="bordered"
+              </CFormGroup>
+              <CFormGroup row>
+                <CCol md="3">
+                  <CLabel htmlFor="link">لینک</CLabel>
+                </CCol>
+                <CCol xs="12" md="9">
+                  <CInput
+                    id="link"
+                    placeholder="لینک"
+                    value={link}
+                    onChange={setLinkValue}
+                    required
                   />
                 </CCol>
               </CFormGroup>
@@ -130,7 +131,7 @@ const Companies = () => {
             <CCardFooter className="d-flex justify-content-end">
               <CButton size="md" color="primary" onClick={addItem}>
                 <CIcon name="cil-scrubber" />{" "}
-                {id && id !== "" ? "ویرایش لوگو" : "ایجاد لوگو"}
+                {id && id !== "" ? "ویرایش لینک" : "ایجاد لینک"}
               </CButton>
             </CCardFooter>
           </CCard>
@@ -138,11 +139,11 @@ const Companies = () => {
       </CForm>
 
       <CCard>
-        <CCardHeader>لوگو‌های اضافه شده</CCardHeader>
+        <CCardHeader>لینک‌های اضافه شده</CCardHeader>
         <CRow className="p-3">
           {data &&
             data.map((item) => (
-              <CompanyLogo
+              <HeaderLink
                 objectData={item}
                 removeId={removeId}
                 editItem={editItem}
@@ -188,4 +189,4 @@ const Companies = () => {
     </>
   );
 };
-export default Companies;
+export default Header;

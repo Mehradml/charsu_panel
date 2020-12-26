@@ -17,7 +17,7 @@ import {
   CModalBody,
   CModalFooter,
   CModalHeader,
-  CModalTitle 
+  CModalTitle,
 } from "@coreui/react";
 import AppreciationCard from "../../components/appreciation-card";
 import CIcon from "@coreui/icons-react";
@@ -28,9 +28,9 @@ const Appreciation = () => {
   const [id, setid] = useState("");
   const [title, settitle] = useState("");
   const [img, setimg] = useState("");
-  const [successModal, setSuccessModal] = useState(false)
-  const [deleteModal, setDeleteModal] = useState(false)
-  const [deleteId,setdeleteId]= useState('')
+  const [successModal, setSuccessModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteId, setdeleteId] = useState("");
 
   useEffect(() => {
     axios.get("http://103.215.223.142:8000/api/appreciation").then((res) => {
@@ -58,34 +58,36 @@ const Appreciation = () => {
     formData.append("img", img);
     formData.append("title", title);
     formData.append("id", id);
-    axios.post("http://103.215.223.142:8000/api/appreciation", formData).then((res) => {
-      const temp = [...data];
-      if (id != "") {
-        const pathUrl = path == "" ? res.data.data.img : path;
-        let object = { title, img: pathUrl, id };
-        const index = temp.findIndex((item) => item.id == object.id);
-        temp[index] = object;
-        setdata(temp);
-      } else {
-        let object = { title, img: path, id: res.data.data.id };
-        temp.push(object);
-        setdata(temp);
-      }
-      settitle("");
-      setpath("");
-      setid("");
-      setimg("");
-    });
+    axios
+      .post("http://103.215.223.142:8000/api/appreciation", formData)
+      .then((res) => {
+        const temp = [...data];
+        if (id != "") {
+          const pathUrl = path == "" ? res.data.data.img : path;
+          let object = { title, img: pathUrl, id };
+          const index = temp.findIndex((item) => item.id == object.id);
+          temp[index] = object;
+          setdata(temp);
+        } else {
+          let object = { title, img: path, id: res.data.data.id };
+          temp.push(object);
+          setdata(temp);
+        }
+        settitle("");
+        setpath("");
+        setid("");
+        setimg("");
+      });
   };
 
   const setTitleValue = (e) => {
     settitle(e.target.value);
   };
 
-const removeId =(id)=>{
-     setdeleteId(id);
-      setDeleteModal(!deleteModal)
-  }
+  const removeId = (id) => {
+    setdeleteId(id);
+    setDeleteModal(!deleteModal);
+  };
 
   const removeCard = () => {
     axios.delete(`http://103.215.223.142:8000/api/appreciation/${deleteId}`).then((res) => {
@@ -99,7 +101,7 @@ const removeId =(id)=>{
 
     });
   };
-  
+
   return (
     <>
       <CForm
@@ -108,7 +110,7 @@ const removeId =(id)=>{
         encType="multipart/form-data"
         className="form-horizontal"
       >
-        <CCol xs="12"  lg="8" className="mx-lg-auto">
+        <CCol xs="12" lg="8" className="mx-lg-auto">
           <CCard>
             <CCardHeader>لوح تقدیر جدید</CCardHeader>
             <CCardBody>
@@ -174,33 +176,41 @@ const removeId =(id)=>{
             ))}
         </CRow>
       </CCard>
-      <CModal 
-              show={successModal} 
-              onClose={() => setSuccessModal(!successModal)}
-              color="success"
-            >
-              <CModalHeader closeButton/>
-              <CModalBody>
-               تغییرات با موفقیت انجام شد!
-              </CModalBody>
-              <CModalFooter>
-                <CButton color="success" onClick={() => setSuccessModal(!successModal)}>تایید</CButton>
-              </CModalFooter>
-            </CModal>
-            <CModal 
-              show={deleteModal} 
-              onClose={() =>setDeleteModal(!deleteModal)}
-              color="danger"
-            >
-              <CModalHeader closeButton/>
-              <CModalBody>
-               آیا از پاک کردن آیتم مطمئن هستید؟
-              </CModalBody>
-              <CModalFooter>
-                <CButton color="danger" onClick={removeCard}>پاک کردن</CButton>
-                <CButton color="secondary" onClick={() =>setDeleteModal(!deleteModal)}>بازگشت</CButton>
-              </CModalFooter>
-            </CModal>
+      <CModal
+        show={successModal}
+        onClose={() => setSuccessModal(!successModal)}
+        color="success"
+      >
+        <CModalHeader closeButton />
+        <CModalBody>تغییرات با موفقیت انجام شد!</CModalBody>
+        <CModalFooter>
+          <CButton
+            color="success"
+            onClick={() => setSuccessModal(!successModal)}
+          >
+            تایید
+          </CButton>
+        </CModalFooter>
+      </CModal>
+      <CModal
+        show={deleteModal}
+        onClose={() => setDeleteModal(!deleteModal)}
+        color="danger"
+      >
+        <CModalHeader closeButton />
+        <CModalBody>آیا از پاک کردن آیتم مطمئن هستید؟</CModalBody>
+        <CModalFooter>
+          <CButton color="danger" onClick={removeCard}>
+            پاک کردن
+          </CButton>
+          <CButton
+            color="secondary"
+            onClick={() => setDeleteModal(!deleteModal)}
+          >
+            بازگشت
+          </CButton>
+        </CModalFooter>
+      </CModal>
     </>
   );
 };

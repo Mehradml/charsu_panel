@@ -16,7 +16,7 @@ import {
   CModalBody,
   CModalFooter,
   CModalHeader,
-  CModalTitle 
+  CModalTitle,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import CategoryCard from "src/components/categoryCard";
@@ -28,9 +28,9 @@ const HomeProductCategory = () => {
   const [title, settitle] = useState("");
   const [price, setprice] = useState("");
   const [img, setimg] = useState("");
-  const [successModal, setSuccessModal] = useState(false)
-  const [deleteModal, setDeleteModal] = useState(false)
-  const [deleteId,setdeleteId]= useState('')
+  const [successModal, setSuccessModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteId, setdeleteId] = useState("");
 
   useEffect(() => {
     axios.get("http://103.215.223.142:8000/api/category").then((res) => {
@@ -89,11 +89,10 @@ const HomeProductCategory = () => {
     setprice(e.target.value);
   };
 
-  const removeId =(id)=>{
-   setdeleteId(id);
-    setDeleteModal(!deleteModal)
-}
-   
+  const removeId = (id) => {
+    setdeleteId(id);
+    setDeleteModal(!deleteModal);
+  };
 
   const removeCard = () => {
     axios.delete(`http://103.215.223.142:8000/api/category/${deleteId}`).then((res) => {
@@ -107,7 +106,7 @@ const HomeProductCategory = () => {
 
     });
   };
-  
+
   return (
     <>
       <CForm
@@ -182,33 +181,41 @@ const HomeProductCategory = () => {
             ))}
         </CRow>
       </CCard>
-       <CModal 
-              show={successModal} 
-              onClose={() => setSuccessModal(!successModal)}
-              color="success"
-            >
-              <CModalHeader closeButton/>
-              <CModalBody>
-               تغییرات با موفقیت انجام شد!
-              </CModalBody>
-              <CModalFooter>
-                <CButton color="success" onClick={() => setSuccessModal(!successModal)}>تایید</CButton>
-              </CModalFooter>
-            </CModal>
-            <CModal 
-              show={deleteModal} 
-              onClose={() =>setDeleteModal(!deleteModal)}
-              color="danger"
-            >
-              <CModalHeader closeButton/>
-              <CModalBody>
-               آیا از پاک کردن آیتم مطمئن هستید؟
-              </CModalBody>
-              <CModalFooter>
-                <CButton color="danger" onClick={removeCard}>پاک کردن</CButton>
-                <CButton color="secondary" onClick={() =>setDeleteModal(!deleteModal)}>بازگشت</CButton>
-              </CModalFooter>
-            </CModal>
+      <CModal
+        show={successModal}
+        onClose={() => setSuccessModal(!successModal)}
+        color="success"
+      >
+        <CModalHeader closeButton />
+        <CModalBody>تغییرات با موفقیت انجام شد!</CModalBody>
+        <CModalFooter>
+          <CButton
+            color="success"
+            onClick={() => setSuccessModal(!successModal)}
+          >
+            تایید
+          </CButton>
+        </CModalFooter>
+      </CModal>
+      <CModal
+        show={deleteModal}
+        onClose={() => setDeleteModal(!deleteModal)}
+        color="danger"
+      >
+        <CModalHeader closeButton />
+        <CModalBody>آیا از پاک کردن آیتم مطمئن هستید؟</CModalBody>
+        <CModalFooter>
+          <CButton color="danger" onClick={removeCard}>
+            پاک کردن
+          </CButton>
+          <CButton
+            color="secondary"
+            onClick={() => setDeleteModal(!deleteModal)}
+          >
+            بازگشت
+          </CButton>
+        </CModalFooter>
+      </CModal>
     </>
   );
 };

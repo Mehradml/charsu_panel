@@ -3,6 +3,12 @@ import CIcon from "@coreui/icons-react";
 
 export default [
   {
+    _tag: "CSidebarNavItem",
+    name: "هدر",
+    to: "/header/header",
+    icon: "cil-drop",
+  },
+  {
     _tag: "CSidebarNavDropdown",
     name: "صفحه اول",
     route: "/base",
@@ -53,7 +59,6 @@ export default [
     ],
   },
 
-
   {
     _tag: "CSidebarNavDropdown",
     name: "صفحه درباره ما",
@@ -83,13 +88,19 @@ export default [
         name: "همکاری با شرکت‌ها",
         to: "/about-us/companies",
         icon: "cil-drop",
-      }
-    ]
+      },
+    ],
   },
   {
     _tag: "CSidebarNavItem",
     name: "ارتباط با ما",
     to: "/contact-us/contact-us",
+    icon: "cil-drop",
+  },
+  {
+    _tag: "CSidebarNavItem",
+    name: "فوتر",
+    to: "/footer/footer",
     icon: "cil-drop",
   },
 ];

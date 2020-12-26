@@ -68,6 +68,8 @@ const Appreciation = React.lazy(() => import("./views/about-us/appreciation"));
 const Community = React.lazy(() => import("./views/about-us/community"));
 const Companies = React.lazy(() => import("./views/about-us/companies"));
 const ContactUs = React.lazy(() => import("./views/contact-us/contact-us"));
+const Footer = React.lazy(() => import("./views/footer/footer"));
+const Header = React.lazy(() => import("./views/header/header"));
 
 const Typography = React.lazy(() =>
   import("./views/theme/typography/Typography")
@@ -117,6 +119,16 @@ const routes = [
     path: "/contact-us/contact-us",
     name: "ContactUs",
     component: ContactUs,
+  },
+  {
+    path: "/footer/footer",
+    name: "Footer",
+    component: Footer,
+  },
+  {
+    path: "/header/header",
+    name: "Header",
+    component: Header,
   },
 
   { path: "/theme/typography", name: "Typography", component: Typography },

@@ -17,7 +17,7 @@ import {
   CModalBody,
   CModalFooter,
   CModalHeader,
-  CModalTitle 
+  CModalTitle,
 } from "@coreui/react";
 import CommunityCard from "../../components/community-card";
 import CIcon from "@coreui/icons-react";
@@ -28,9 +28,9 @@ const Community = () => {
   const [id, setid] = useState("");
   const [title, settitle] = useState("");
   const [img, setimg] = useState("");
-  const [successModal, setSuccessModal] = useState(false)
-  const [deleteModal, setDeleteModal] = useState(false)
-  const [deleteId,setdeleteId]= useState('')
+  const [successModal, setSuccessModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteId, setdeleteId] = useState("");
 
   useEffect(() => {
     axios.get("http://103.215.223.142:8000/api/community").then((res) => {
@@ -82,10 +82,10 @@ const Community = () => {
     settitle(e.target.value);
   };
 
-const removeId =(id)=>{
-     setdeleteId(id);
-      setDeleteModal(!deleteModal)
-  }
+  const removeId = (id) => {
+    setdeleteId(id);
+    setDeleteModal(!deleteModal);
+  };
 
   const removeCard = () => {
     axios.delete(`http://103.215.223.142:8000/api/community/${deleteId}`).then((res) => {
@@ -107,7 +107,7 @@ const removeId =(id)=>{
         encType="multipart/form-data"
         className="form-horizontal"
       >
-        <CCol xs="12"  lg="8" className="mx-lg-auto">
+        <CCol xs="12" lg="8" className="mx-lg-auto">
           <CCard>
             <CCardHeader>لوح تقدیر جدید</CCardHeader>
             <CCardBody>
@@ -173,33 +173,41 @@ const removeId =(id)=>{
             ))}
         </CRow>
       </CCard>
-      <CModal 
-              show={successModal} 
-              onClose={() => setSuccessModal(!successModal)}
-              color="success"
-            >
-              <CModalHeader closeButton/>
-              <CModalBody>
-               تغییرات با موفقیت انجام شد!
-              </CModalBody>
-              <CModalFooter>
-                <CButton color="success" onClick={() => setSuccessModal(!successModal)}>تایید</CButton>
-              </CModalFooter>
-            </CModal>
-            <CModal 
-              show={deleteModal} 
-              onClose={() =>setDeleteModal(!deleteModal)}
-              color="danger"
-            >
-              <CModalHeader closeButton/>
-              <CModalBody>
-               آیا از پاک کردن آیتم مطمئن هستید؟
-              </CModalBody>
-              <CModalFooter>
-                <CButton color="danger" onClick={removeCard}>پاک کردن</CButton>
-                <CButton color="secondary" onClick={() =>setDeleteModal(!deleteModal)}>بازگشت</CButton>
-              </CModalFooter>
-            </CModal>
+      <CModal
+        show={successModal}
+        onClose={() => setSuccessModal(!successModal)}
+        color="success"
+      >
+        <CModalHeader closeButton />
+        <CModalBody>تغییرات با موفقیت انجام شد!</CModalBody>
+        <CModalFooter>
+          <CButton
+            color="success"
+            onClick={() => setSuccessModal(!successModal)}
+          >
+            تایید
+          </CButton>
+        </CModalFooter>
+      </CModal>
+      <CModal
+        show={deleteModal}
+        onClose={() => setDeleteModal(!deleteModal)}
+        color="danger"
+      >
+        <CModalHeader closeButton />
+        <CModalBody>آیا از پاک کردن آیتم مطمئن هستید؟</CModalBody>
+        <CModalFooter>
+          <CButton color="danger" onClick={removeCard}>
+            پاک کردن
+          </CButton>
+          <CButton
+            color="secondary"
+            onClick={() => setDeleteModal(!deleteModal)}
+          >
+            بازگشت
+          </CButton>
+        </CModalFooter>
+      </CModal>
     </>
   );
 };

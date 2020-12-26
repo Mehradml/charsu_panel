@@ -17,7 +17,7 @@ import {
   CModalBody,
   CModalFooter,
   CModalHeader,
-  CModalTitle 
+  CModalTitle,
 } from "@coreui/react";
 import ProjectCart from "../../components/project-cart";
 import CIcon from "@coreui/icons-react";
@@ -30,9 +30,9 @@ const HomeProjects = () => {
   const [text, settext] = useState("");
   const [city, setcity] = useState("");
   const [img, setimg] = useState("");
-  const [success, setSuccess] = useState(false)
-  const [danger, setDanger] = useState(false)
-  const [deleteId,setdeleteId]= useState('')
+  const [success, setSuccess] = useState(false);
+  const [danger, setDanger] = useState(false);
+  const [deleteId, setdeleteId] = useState("");
 
   useEffect(() => {
     axios.get("http://103.215.223.142:8000/api/project").then((res) => {
@@ -101,8 +101,8 @@ const HomeProjects = () => {
 
   const removeObject = (id) => {
     setdeleteId(id);
-    setDanger(!danger)
-  }
+    setDanger(!danger);
+  };
 
   const remove = () => {
     
@@ -189,7 +189,7 @@ const HomeProjects = () => {
                     className="border-0"
                   />
                 </CCol>
-                <CCol xs="12" md="4" >
+                <CCol xs="12" md="4">
                   <img
                     src={path}
                     alt=""
@@ -223,33 +223,31 @@ const HomeProjects = () => {
             ))}
         </CRow>
       </CCard>
-      <CModal 
-              show={success} 
-              onClose={() => setSuccess(!success)}
-              color="success"
-            >
-              <CModalHeader closeButton/>
-              <CModalBody>
-               تغییرات با موفقیت انجام شد!
-              </CModalBody>
-              <CModalFooter>
-                <CButton color="success" onClick={() => setSuccess(!success)}>تایید</CButton>
-              </CModalFooter>
-            </CModal>
-            <CModal 
-              show={danger} 
-              onClose={() => setDanger(!danger)}
-              color="danger"
-            >
-              <CModalHeader closeButton/>
-              <CModalBody>
-               آیا از پاک کردن آیتم مطمئن هستید؟
-              </CModalBody>
-              <CModalFooter>
-                <CButton color="danger" onClick={remove}>پاک کردن</CButton>
-                <CButton color="secondary" onClick={() => setDanger(!danger)}>بازگشت</CButton>
-              </CModalFooter>
-            </CModal>
+      <CModal
+        show={success}
+        onClose={() => setSuccess(!success)}
+        color="success"
+      >
+        <CModalHeader closeButton />
+        <CModalBody>تغییرات با موفقیت انجام شد!</CModalBody>
+        <CModalFooter>
+          <CButton color="success" onClick={() => setSuccess(!success)}>
+            تایید
+          </CButton>
+        </CModalFooter>
+      </CModal>
+      <CModal show={danger} onClose={() => setDanger(!danger)} color="danger">
+        <CModalHeader closeButton />
+        <CModalBody>آیا از پاک کردن آیتم مطمئن هستید؟</CModalBody>
+        <CModalFooter>
+          <CButton color="danger" onClick={remove}>
+            پاک کردن
+          </CButton>
+          <CButton color="secondary" onClick={() => setDanger(!danger)}>
+            بازگشت
+          </CButton>
+        </CModalFooter>
+      </CModal>
     </>
   );
 };
