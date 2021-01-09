@@ -79,10 +79,10 @@ const Users = React.lazy(() => import("./views/users/Users"));
 const User = React.lazy(() => import("./views/users/User"));
 
 const routes = [
-  { path: "/", exact: true, name: "Home" },
-  { path: "/dashboard", name: "Dashboard", component: Dashboard },
-  { path: "/theme", name: "Theme", component: Colors, exact: true },
-  { path: "/theme/colors", name: "Colors", component: Colors },
+  // { path: "/",  name: "Home" , component: HomeTexts },
+  // { path: "/dashboard", name: "Dashboard", component: Dashboard },
+  // { path: "/theme", name: "Theme", component: Colors, exact: true },
+  // { path: "/theme/colors", name: "Colors", component: Colors },
   { path: "/home/texts", name: "HomeTexts", component: HomeTexts },
   { path: "/home/projects", name: "Projects", component: HomeProjects },
   { path: "/home/courses", name: "Courses", component: HomeCourses },
